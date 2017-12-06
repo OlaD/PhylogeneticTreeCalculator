@@ -8,3 +8,9 @@ D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\Roo
 D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\obj\Debug\RootedPhylogeneticTreeCalculator.csproj.CoreCompileInputs.cache
 D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\obj\Debug\RootedPhylogeneticTreeCalculator.exe
 D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\obj\Debug\RootedPhylogeneticTreeCalculator.pdb
+D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\bin\Debug\Microsoft.Msagl.dll
+D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\bin\Debug\Microsoft.Msagl.Drawing.dll
+D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\bin\Debug\Microsoft.Msagl.GraphViewerGdi.dll
+D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\bin\Debug\Microsoft.Msagl.xml
+D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\bin\Debug\Microsoft.Msagl.Drawing.xml
+D:\Studia\Elementy Bioinformatyki\Projekt\1\RootedPhylogeneticTreeCalculator\RootedPhylogeneticTreeCalculator\bin\Debug\Microsoft.Msagl.GraphViewerGdi.xml
