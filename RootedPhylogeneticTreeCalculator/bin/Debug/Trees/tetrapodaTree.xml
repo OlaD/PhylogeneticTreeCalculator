@@ -1,0 +1,58 @@
+ <phyloxml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd"
+   xmlns="http://www.phyloxml.org">
+   <phylogeny rooted="true">
+      <clade>
+        <name>czworonogi (Tetrapoda)</name>
+		<clade>
+			<name>antrakozaury (Anthracosauria)</name>
+			<clade>
+				<clade>
+					<clade>
+						<name>owodniowce (Amniota)</name>
+					</clade>
+					<clade>
+						<name>Diadectomorpha †</name>
+					</clade>
+				</clade>
+				<clade>
+					<name>Solenodonsaurus †</name>
+				</clade>
+			</clade>
+		</clade>
+		<clade>
+			<name>płazy (Amphibia)</name>
+			<clade>
+				<clade>
+					<clade>
+						<clade>
+							<clade>
+								<name>płazy współczesne</name>
+							</clade>
+							<clade>
+								<name>Lysorophia †</name>
+							</clade>
+						</clade>
+						<clade>
+							<name>mikrozaury (Microsauria) †</name>
+						</clade>
+					</clade>
+				</clade>
+				<clade>
+					<name>Nectridea †</name>
+				</clade>
+			</clade>
+			<clade>
+				<clade>
+					<clade>
+						<name>Aistopoda †</name>
+					</clade>
+					<clade>
+						<name>Adelogyrinidae †</name>
+					</clade>
+				</clade>
+			</clade>
+		</clade>
+	  </clade>
+   </phylogeny>
+ </phyloxml>

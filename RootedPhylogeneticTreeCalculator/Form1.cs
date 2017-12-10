@@ -1,5 +1,6 @@
 ﻿using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.GraphViewerGdi;
+using System;
 using System.Windows.Forms;
 
 namespace RootedPhylogeneticTreeCalculator
@@ -7,10 +8,12 @@ namespace RootedPhylogeneticTreeCalculator
     public partial class Form1 : Form
     {
         GViewer viewer;
+        TreeNode tree;
 
         public Form1()
         {
             InitializeComponent();
+
             viewer = new GViewer();
 
             // przykładowe drzewo
@@ -56,6 +59,17 @@ namespace RootedPhylogeneticTreeCalculator
             viewer.Dock = DockStyle.Fill;
             graphPanel.Controls.Add(viewer);
             ResumeLayout();
+        }
+
+        private void loadFileButton_Click(object sender, System.EventArgs e)
+        {
+            openFileDialog1.Filter = "xml|*.xml";
+            openFileDialog1.InitialDirectory = Environment.CurrentDirectory;
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                PhyloXMLParser parser = new PhyloXMLParser();
+                tree = parser.LoadTree(openFileDialog1.FileName);
+            }
         }
     }
 }
