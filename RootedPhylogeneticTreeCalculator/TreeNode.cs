@@ -45,5 +45,15 @@ namespace RootedPhylogeneticTreeCalculator
             Children.Add(child);
             return child;
         }
+
+        // pobiera klastry z węzła i jego dzieci
+        public List<Cluster> GetAllClustersFromSubtree()
+        {
+            List<Cluster> clusters = new List<Cluster>();
+            clusters.Add(Cluster);
+            foreach (var child in Children)
+                clusters.AddRange(child.GetAllClustersFromSubtree());
+            return clusters;
+        }
     }
 }
