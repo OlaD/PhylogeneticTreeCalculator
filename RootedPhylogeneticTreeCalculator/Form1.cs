@@ -12,6 +12,7 @@ namespace RootedPhylogeneticTreeCalculator
         GViewer viewer;
 
         List<TreeNode> trees = new List<TreeNode>();
+        int emptyNodeCounter = 0;
 
         public Form1()
         {
@@ -74,8 +75,35 @@ namespace RootedPhylogeneticTreeCalculator
                     PhyloXMLParser parser = new PhyloXMLParser();
                     TreeNode tree = parser.LoadTree(file);
                     trees.Add(tree);
+
+                    Graph graph = new Graph();
+                    tree.Label = "root";
+                    treeToGraph(tree, tree.Label, graph);
+                    ShowGraph(graph);
                 }
             }
+        }
+
+        private void treeToGraph(TreeNode nextNode, String ancestorLabel, Graph graph)
+        {
+            if (nextNode.Label == "")
+            {
+                nextNode.Label = "node" + emptyNodeCounter.ToString();
+                emptyNodeCounter++;
+            }
+            if (!nextNode.IsLeaf)
+            {
+                foreach (TreeNode child in nextNode.Children)
+                {
+                    String ancestorString = nextNode.Label;
+                    treeToGraph(child, ancestorString, graph);
+                }
+                if (nextNode.Label == "root")
+                {
+                    return;
+                }
+            }
+            graph.AddEdge(ancestorLabel, nextNode.Label);
         }
 
         private void button1_Click(object sender, EventArgs e)
