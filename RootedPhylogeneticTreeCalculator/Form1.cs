@@ -80,31 +80,78 @@ namespace RootedPhylogeneticTreeCalculator
                     tree.Label = "root";
                     treeToGraph(tree, tree.Label, graph);
                     ShowGraph(graph);
+                    checkTrees(tree);
                 }
             }
         }
 
-        private void treeToGraph(TreeNode nextNode, String ancestorLabel, Graph graph)
+        private void treeToGraph(TreeNode currentNode, String ancestorLabel, Graph graph)
         {
-            if (nextNode.Label == "")
+            if (currentNode.Label == "")
             {
-                nextNode.Label = "node" + emptyNodeCounter.ToString();
+                for(int i=0; i<= emptyNodeCounter;i++)
+                {
+                    // Brzydki workaround na puste <clad> bez <name>
+                    currentNode.Label += " ";
+                }
+                //currentNode.Label = "node" + emptyNodeCounter.ToString();
+                //currentNode.Label = currentNode.Cluster.ToString();
                 emptyNodeCounter++;
             }
-            if (!nextNode.IsLeaf)
+            if (!currentNode.IsLeaf)
             {
-                foreach (TreeNode child in nextNode.Children)
+                foreach (TreeNode child in currentNode.Children)
                 {
-                    String ancestorString = nextNode.Label;
+                    String ancestorString = currentNode.Label;
                     treeToGraph(child, ancestorString, graph);
                 }
-                if (nextNode.Label == "root")
+                if (currentNode.Label == "root")
                 {
                     return;
                 }
             }
-            graph.AddEdge(ancestorLabel, nextNode.Label);
+            graph.AddEdge(ancestorLabel, currentNode.Label);
         }
+
+        private void checkTrees(TreeNode tree)
+        {
+            List<String> leafsList = new List<String>();
+            //leafsList.Add("owodniowce (Amniota)");
+            if (allLeafsToList(leafsList, tree))
+            {
+                treeCheckLabel.Text = "Zgodne";
+            }
+            else
+            {
+                treeCheckLabel.Text = "Niezgodne";
+            }
+        }
+
+        private bool allLeafsToList(List<string> leafsList, TreeNode currentNode)
+        {
+            bool status = true;
+
+            if (!currentNode.IsLeaf)
+            {
+                foreach (TreeNode child in currentNode.Children)
+                {
+                    if (!allLeafsToList(leafsList, child))
+                    {
+                        status = false;
+                    }
+                }
+            }
+
+            if(leafsList.Contains(currentNode.Label))
+            {
+                status = false;
+            }
+            leafsList.Add(currentNode.Label);
+
+            return status;
+        }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
