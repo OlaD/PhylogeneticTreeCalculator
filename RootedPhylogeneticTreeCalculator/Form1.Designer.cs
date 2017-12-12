@@ -36,6 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.treeCheckLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.rfDistanceLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // graphPanel
@@ -113,12 +115,32 @@
             this.treeCheckLabel.TabIndex = 9;
             this.treeCheckLabel.Text = "Brak";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1, 521);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(142, 25);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Odległosc RF";
+            // 
+            // rfDistanceLabel
+            // 
+            this.rfDistanceLabel.AutoSize = true;
+            this.rfDistanceLabel.Location = new System.Drawing.Point(1, 558);
+            this.rfDistanceLabel.Name = "rfDistanceLabel";
+            this.rfDistanceLabel.Size = new System.Drawing.Size(56, 25);
+            this.rfDistanceLabel.TabIndex = 1;
+            this.rfDistanceLabel.Text = "Brak";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(994, 754);
+            this.Controls.Add(this.rfDistanceLabel);
             this.Controls.Add(this.treeCheckLabel);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
@@ -142,6 +164,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label treeCheckLabel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label rfDistanceLabel;
     }
 }
 

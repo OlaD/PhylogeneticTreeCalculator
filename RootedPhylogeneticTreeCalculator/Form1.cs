@@ -74,19 +74,78 @@ namespace RootedPhylogeneticTreeCalculator
                 {
                     PhyloXMLParser parser = new PhyloXMLParser();
                     TreeNode tree = parser.LoadTree(file);
-                    trees.Add(tree);
-
+                    
+                    // Wyswietlanie wczytanego pliku
                     Graph graph = new Graph();
                     tree.Label = "root";
                     treeToGraph(tree, tree.Label, graph);
                     ShowGraph(graph);
-                    checkTrees(tree);
+
+                    // Sprawdzenie poprawnosci drzewa. Wyswietlamy jedynie informacje, ale i tak wyswietlamy.
+                    checkTree(tree);
+
+                    // Dodanie drzewa do listy drzew.
+                    trees.Add(tree);
+
+                    // Sprawdzenie odleglosci RF miedzy drzewami.
+                    checkDistance();
                 }
             }
         }
 
+        private void checkDistance()
+        {
+            if (trees.Count > 1)
+            {
+                // Pobranie dwoch ostatnich drzew
+                List<String> clusterNames1 = new List<String>();
+                List<String> clusterNames2 = new List<String>();
+
+                // Tworzy liste klastrow poszczegolnych drzew
+                addClusters(trees[trees.Count - 2], clusterNames1);
+                addClusters(trees[trees.Count - 1], clusterNames2);
+
+                int uniqueClustersCount = 0;
+
+                // Sprawdzenie unikalnych klastrow
+                foreach(String clusterName in clusterNames2)
+                {
+                    if (!clusterNames1.Contains(clusterName))
+                    {
+                        uniqueClustersCount++;
+                    }
+                }
+
+                foreach (String clusterName in clusterNames1)
+                {
+                    if (!clusterNames2.Contains(clusterName))
+                    {
+                        uniqueClustersCount++;
+                    }
+                }
+
+                float rfDistance = (float)uniqueClustersCount / 2.0f;
+                rfDistanceLabel.Text = rfDistance.ToString();
+            }
+        }
+
+        // Przeszukuje rekurencyjnie nody, dodaje kazdy klaster do listy
+        private void addClusters(TreeNode currentNode, List<String> clusterNames)
+        {
+            if (!currentNode.IsLeaf)
+            {
+                foreach (TreeNode child in currentNode.Children)
+                {
+                    addClusters(child, clusterNames);
+                }
+            }
+            clusterNames.Add(currentNode.Cluster.ToString());
+        }
+
+        // Dodaje krawedzie na podstawie rekurencyjnego przeszukania drzewa
         private void treeToGraph(TreeNode currentNode, String ancestorLabel, Graph graph)
         {
+            // Dodaje spacje do pustych nodow, przy dodaniu do krawedzi nie moze byc pustych
             if (currentNode.Label == "")
             {
                 for(int i=0; i<= emptyNodeCounter;i++)
@@ -98,6 +157,8 @@ namespace RootedPhylogeneticTreeCalculator
                 //currentNode.Label = currentNode.Cluster.ToString();
                 emptyNodeCounter++;
             }
+
+            // Rekurencyjne przeszukiwanie
             if (!currentNode.IsLeaf)
             {
                 foreach (TreeNode child in currentNode.Children)
@@ -113,11 +174,12 @@ namespace RootedPhylogeneticTreeCalculator
             graph.AddEdge(ancestorLabel, currentNode.Label);
         }
 
-        private void checkTrees(TreeNode tree)
+        // Sprawdza zgodnosc drzewa (czy nie powtarzaja sie wierzcholki)
+        private void checkTree(TreeNode tree)
         {
-            List<String> leafsList = new List<String>();
+            List<String> nodesLabelsList = new List<String>();
             //leafsList.Add("owodniowce (Amniota)");
-            if (allLeafsToList(leafsList, tree))
+            if (allNodesLabelsToList(nodesLabelsList, tree))
             {
                 treeCheckLabel.Text = "Zgodne";
             }
@@ -127,7 +189,8 @@ namespace RootedPhylogeneticTreeCalculator
             }
         }
 
-        private bool allLeafsToList(List<string> leafsList, TreeNode currentNode)
+        // Funkcja zwraca false jezeli ktorys label sie powtorzyl
+        private bool allNodesLabelsToList(List<string> leafsList, TreeNode currentNode)
         {
             bool status = true;
 
@@ -135,8 +198,9 @@ namespace RootedPhylogeneticTreeCalculator
             {
                 foreach (TreeNode child in currentNode.Children)
                 {
-                    if (!allLeafsToList(leafsList, child))
+                    if (!allNodesLabelsToList(leafsList, child))
                     {
+                        // Jezeli ktores z childow zwrocilo false oznacza niezgodnosc i dalej nie sprawdzamy
                         status = false;
                     }
                 }
@@ -144,14 +208,15 @@ namespace RootedPhylogeneticTreeCalculator
 
             if(leafsList.Contains(currentNode.Label))
             {
+                // Znaleziono taki sam label, zwracamy false
                 status = false;
             }
+
+            // Dodanie do listy w celu pozniejszych porownan
             leafsList.Add(currentNode.Label);
 
             return status;
         }
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
