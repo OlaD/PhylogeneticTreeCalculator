@@ -55,5 +55,10 @@ namespace RootedPhylogeneticTreeCalculator
                 clusters.AddRange(child.GetAllClustersFromSubtree());
             return clusters;
         }
+
+        public bool IsChildOf(TreeNode node)
+        {
+            return node.Children.Contains(this);
+        }
     }
 }

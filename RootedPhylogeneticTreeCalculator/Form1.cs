@@ -39,13 +39,13 @@ namespace RootedPhylogeneticTreeCalculator
                 foreach (String file in openFileDialog1.FileNames)
                 {
                     PhyloXMLParser parser = new PhyloXMLParser();
-                    TreeNode tree = parser.LoadTree(file);
+                    Tree tree = parser.LoadTree(file);
 
                     // Wyswietlanie wczytanego pliku
                     Graph graph = AddGraph();
                     listBox1.Items.Add(file.Substring(file.LastIndexOf('\\'), file.Length - file.LastIndexOf('\\')));
 
-                    tree.Label = "root";
+                    //tree.Label = "root";
                     treeToGraph(tree, tree.Label, graph, checkBox1.Checked);
                     ShowGraph(graph);
 
@@ -54,6 +54,11 @@ namespace RootedPhylogeneticTreeCalculator
 
                     // Dodanie drzewa do listy drzew.
                     trees.Add(tree);
+
+                    // testowe
+                    //TreeNode n = tree.Children.First().Children.First();
+                    //Split split = SplitCalculator.GetSplitForEdgeTo(n, tree);
+                    //MessageBox.Show(split.ToString());
                 }
             }
         }

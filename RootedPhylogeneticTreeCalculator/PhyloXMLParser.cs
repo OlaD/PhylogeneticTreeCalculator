@@ -7,7 +7,7 @@ namespace RootedPhylogeneticTreeCalculator
     class PhyloXMLParser
     {
         // Wczytuje drzewo z pliku w formacie phyloXML
-        public TreeNode LoadTree(string file)
+        public Tree LoadTree(string file)
         {
             XDocument doc = XDocument.Load(file);
             var xmlTree = doc.Root.Elements().First(); // phyloxml/phylogeny
