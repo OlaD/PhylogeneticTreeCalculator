@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace RootedPhylogeneticTreeCalculator
@@ -9,20 +10,27 @@ namespace RootedPhylogeneticTreeCalculator
         public TreeNode LoadTree(string file)
         {
             XDocument doc = XDocument.Load(file);
-            var mainClade = doc.Root.Elements().First().Elements().Where(c => c.Name.LocalName == "clade").First();     // phyloxml/phylogeny/clade
+            var xmlTree = doc.Root.Elements().First(); // phyloxml/phylogeny
+            bool rooted = Convert.ToBoolean(xmlTree.Attribute("rooted").Value);
 
-            TreeNode root = new TreeNode();
-
-            LoadClade(mainClade, root);
-
-            return root;
+            Tree tree = new Tree(rooted);
+            if (rooted)
+            {
+                var mainClade = xmlTree.Elements().Where(c => c.Name.LocalName == "clade").First();
+                LoadClade(mainClade, tree);
+            }
+            else
+            {
+                LoadClade(xmlTree, tree);
+            }
+            return tree;
         }
 
         // Wczytuje rekurencyjnie węzeł oraz jego dzieci i dodaje do drzewa
         private void LoadClade(XElement clade, TreeNode node)
         {
             var children = clade.Elements().Where(c => c.Name.LocalName == "clade");
-            foreach(var child in children)
+            foreach (var child in children)
             {
                 TreeNode childNode = node.AddChild();
                 LoadName(child, childNode);

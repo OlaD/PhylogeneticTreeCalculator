@@ -111,6 +111,8 @@ namespace RootedPhylogeneticTreeCalculator
                 }
             }
             Edge edge = graph.AddEdge(ancestorLabel, currentNode.Label);
+            edge.Attr.ArrowheadAtSource = ArrowStyle.None;
+            edge.Attr.ArrowheadAtTarget = ArrowStyle.None;
             if (showCluster)
             {
                 edge.TargetNode.LabelText = currentNode.Cluster.ToString();
