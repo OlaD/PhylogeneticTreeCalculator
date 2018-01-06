@@ -1,0 +1,21 @@
+<phyloxml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd"
+xmlns="http://www.phyloxml.org">
+	<phylogeny rooted="true">
+		<clade>
+			<clade>
+				<clade>
+					<clade>
+						<name>a</name>
+					</clade>
+					<clade>
+						<name>b</name>
+					</clade>
+				</clade>
+				<clade>
+					<name>c</name>
+				</clade>
+			</clade>
+		</clade>
+	</phylogeny>
+</phyloxml>

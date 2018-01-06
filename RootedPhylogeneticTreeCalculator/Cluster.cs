@@ -39,6 +39,16 @@ namespace RootedPhylogeneticTreeCalculator
             return ElementsNames.All(other.ElementsNames.Contains);
         }
 
+        public bool IsDisjointFrom(Cluster other)
+        {
+            foreach (string el in ElementsNames)
+            {
+                if (other.ElementsNames.Contains(el))
+                    return false;
+            }
+            return true;
+        }
+
         public bool Equals(Cluster other)
         {
             if (ReferenceEquals(null, other)) return false;

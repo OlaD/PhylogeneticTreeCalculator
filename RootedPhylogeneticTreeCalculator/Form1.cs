@@ -12,47 +12,13 @@ namespace RootedPhylogeneticTreeCalculator
         GViewer viewer;
 
         List<TreeNode> trees = new List<TreeNode>();
+        List<Graph> graphs = new List<Graph>();
         int emptyNodeCounter = 0;
 
         public Form1()
         {
             InitializeComponent();
             viewer = new GViewer();
-
-            //// przykładowe drzewo
-            //TreeNode root = new TreeNode();
-            //TreeNode nodeABC = root.AddChild();
-            //nodeABC.AddChild("a");
-            //nodeABC.AddChild("b");
-            //nodeABC.AddChild("c");
-            //TreeNode nodeDEF = root.AddChild();
-            //nodeDEF.AddChild("d");
-            //TreeNode nodeEF = nodeDEF.AddChild();
-            //nodeEF.AddChild("e");
-            //nodeEF.AddChild("f");
-
-            //label1.Text = nodeABC.Cluster.ToString();
-            //label2.Text = nodeDEF.Cluster.ToString();
-            //label3.Text = nodeEF.Cluster.ToString();
-
-            //// przykładowy graf
-            //Graph graph = new Graph();
-            //graph.AddEdge("a", "b");
-            //graph.AddEdge("a", "c");
-            //graph.AddEdge("c", "d");
-
-            //// przykładowa stylizacja węzłów i krawędzi
-            //Node e = new Node("e");
-            //e.Attr.Shape = Shape.Plaintext;
-            //e.Label.FontSize = e.Label.FontSize - 5;
-            //e.Label.FontColor = Color.BlueViolet;
-            //graph.AddNode(e);
-
-            //Edge edge = graph.AddEdge("c", "e");
-            //edge.Attr.Color = Color.Pink;
-            //edge.Attr.ArrowheadAtTarget = ArrowStyle.None;
-
-            //ShowGraph(graph);
         }
 
         public void ShowGraph(Graph graph)
@@ -74,11 +40,13 @@ namespace RootedPhylogeneticTreeCalculator
                 {
                     PhyloXMLParser parser = new PhyloXMLParser();
                     TreeNode tree = parser.LoadTree(file);
-                    
+
                     // Wyswietlanie wczytanego pliku
-                    Graph graph = new Graph();
+                    Graph graph = AddGraph();
+                    listBox1.Items.Add(file.Substring(file.LastIndexOf('\\'), file.Length - file.LastIndexOf('\\')));
+
                     tree.Label = "root";
-                    treeToGraph(tree, tree.Label, graph);
+                    treeToGraph(tree, tree.Label, graph, checkBox1.Checked);
                     ShowGraph(graph);
 
                     // Sprawdzenie poprawnosci drzewa. Wyswietlamy jedynie informacje, ale i tak wyswietlamy.
@@ -86,47 +54,15 @@ namespace RootedPhylogeneticTreeCalculator
 
                     // Dodanie drzewa do listy drzew.
                     trees.Add(tree);
-
-                    // Sprawdzenie odleglosci RF miedzy drzewami.
-                    checkDistance();
                 }
             }
         }
 
-        private void checkDistance()
+        private Graph AddGraph()
         {
-            if (trees.Count > 1)
-            {
-                // Pobranie dwoch ostatnich drzew
-                List<String> clusterNames1 = new List<String>();
-                List<String> clusterNames2 = new List<String>();
-
-                // Tworzy liste klastrow poszczegolnych drzew
-                addClusters(trees[trees.Count - 2], clusterNames1);
-                addClusters(trees[trees.Count - 1], clusterNames2);
-
-                int uniqueClustersCount = 0;
-
-                // Sprawdzenie unikalnych klastrow
-                foreach(String clusterName in clusterNames2)
-                {
-                    if (!clusterNames1.Contains(clusterName))
-                    {
-                        uniqueClustersCount++;
-                    }
-                }
-
-                foreach (String clusterName in clusterNames1)
-                {
-                    if (!clusterNames2.Contains(clusterName))
-                    {
-                        uniqueClustersCount++;
-                    }
-                }
-
-                float rfDistance = (float)uniqueClustersCount / 2.0f;
-                rfDistanceLabel.Text = rfDistance.ToString();
-            }
+            Graph graph = new Graph();
+            graphs.Add(graph);
+            return graph;
         }
 
         // Przeszukuje rekurencyjnie nody, dodaje kazdy klaster do listy
@@ -143,7 +79,7 @@ namespace RootedPhylogeneticTreeCalculator
         }
 
         // Dodaje krawedzie na podstawie rekurencyjnego przeszukania drzewa
-        private void treeToGraph(TreeNode currentNode, String ancestorLabel, Graph graph)
+        private void treeToGraph(TreeNode currentNode, String ancestorLabel, Graph graph, bool showCluster)
         {
             // Dodaje spacje do pustych nodow, przy dodaniu do krawedzi nie moze byc pustych
             if (currentNode.Label == "")
@@ -164,28 +100,34 @@ namespace RootedPhylogeneticTreeCalculator
                 foreach (TreeNode child in currentNode.Children)
                 {
                     String ancestorString = currentNode.Label;
-                    treeToGraph(child, ancestorString, graph);
+                    treeToGraph(child, ancestorString, graph, showCluster);
                 }
                 if (currentNode.Label == "root")
                 {
+                    Node node = graph.AddNode("root");
+                    if (showCluster)
+                        node.LabelText = currentNode.Cluster.ToString();
                     return;
                 }
             }
-            graph.AddEdge(ancestorLabel, currentNode.Label);
+            Edge edge = graph.AddEdge(ancestorLabel, currentNode.Label);
+            if (showCluster)
+            {
+                edge.TargetNode.LabelText = currentNode.Cluster.ToString();
+            }
         }
 
         // Sprawdza zgodnosc drzewa (czy nie powtarzaja sie wierzcholki)
         private void checkTree(TreeNode tree)
         {
             List<String> nodesLabelsList = new List<String>();
-            //leafsList.Add("owodniowce (Amniota)");
             if (allNodesLabelsToList(nodesLabelsList, tree))
             {
-                treeCheckLabel.Text = "Zgodne";
+                treeCheckLabel.Text = "Tak";
             }
             else
             {
-                treeCheckLabel.Text = "Niezgodne";
+                treeCheckLabel.Text = "Nie";
             }
         }
 
@@ -227,8 +169,118 @@ namespace RootedPhylogeneticTreeCalculator
         {
             int x = Int32.Parse(textBox1.Text);
             ConsensusTreeBuilder consensusTreeBuilder = new ConsensusTreeBuilder();
-            Graph graph = consensusTreeBuilder.CreateConsensusTree(trees, x);
+            List<TreeNode> selectedTrees = new List<TreeNode>();
+            foreach (int index in listBox1.SelectedIndices)
+                selectedTrees.Add(trees[index]);
+            Graph graph = consensusTreeBuilder.CreateConsensusTree(selectedTrees, x);
             ShowGraph(graph);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkTree(trees[listBox1.SelectedIndex]);
+            ShowGraph(graphs[listBox1.SelectedIndex]);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Sprawdzenie odleglosci RF miedzy drzewami.
+            checkDistance();
+        }
+
+        private void checkDistance()
+        {
+            if (trees.Count > 1)
+            {
+                // Pobranie dwoch wybranych drzew
+                if(listBox1.SelectedIndices.Count != 2)
+                {
+                    MessageBox.Show("wybierz 2 drzewa");
+                    return;
+                }
+                TreeNode tree1 = trees[listBox1.SelectedIndices[0]];
+                TreeNode tree2 = trees[listBox1.SelectedIndices[1]];
+
+                List<String> clusterNames1 = new List<String>();
+                List<String> clusterNames2 = new List<String>();
+
+                // Tworzy liste klastrow poszczegolnych drzew
+                addClusters(tree1, clusterNames1);
+                addClusters(tree2, clusterNames2);
+
+                int uniqueClustersCount = 0;
+
+                // Sprawdzenie unikalnych klastrow
+                foreach (String clusterName in clusterNames2)
+                {
+                    if (!clusterNames1.Contains(clusterName))
+                    {
+                        uniqueClustersCount++;
+                    }
+                }
+
+                foreach (String clusterName in clusterNames1)
+                {
+                    if (!clusterNames2.Contains(clusterName))
+                    {
+                        uniqueClustersCount++;
+                    }
+                }
+
+                float rfDistance = uniqueClustersCount / 2.0f;
+                rfDistanceLabel.Text = rfDistance.ToString();
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            graphs.Clear();
+            foreach(TreeNode tree in trees)
+            {
+                Graph graph = AddGraph();
+                tree.Label = "root";
+                treeToGraph(tree, tree.Label, graph, checkBox1.Checked);
+            }
+            if(listBox1.SelectedIndex == -1)
+                ShowGraph(graphs.Last());
+            else
+                ShowGraph(graphs[listBox1.SelectedIndex]);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Compatibility();
+        }
+
+        private void Compatibility()
+        {
+            // Pobranie dwoch wybranych drzew
+            if (listBox1.SelectedIndices.Count != 2)
+            {
+                MessageBox.Show("wybierz 2 drzewa");
+                return;
+            }
+            TreeNode tree1 = trees[listBox1.SelectedIndices[0]];
+            TreeNode tree2 = trees[listBox1.SelectedIndices[1]];
+
+            HashSet<Cluster> clusters = new HashSet<Cluster>();
+            clusters.UnionWith(tree1.GetAllClustersFromSubtree());
+            clusters.UnionWith(tree2.GetAllClustersFromSubtree());
+
+            bool zgodne = true;
+            foreach (Cluster c in clusters)
+            {
+                foreach (Cluster other in clusters)
+                {
+                    if ( !(c.IsSubsetOf(other) || other.IsSubsetOf(c) || c.IsDisjointFrom(other)) )
+                        zgodne = false;
+                }
+            }
+
+            if (zgodne)
+                compLabel.Text = "Zgodne";
+            else
+                compLabel.Text = "Niezgodne";
         }
     }
 }
