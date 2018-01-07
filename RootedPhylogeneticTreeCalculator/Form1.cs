@@ -14,6 +14,7 @@ namespace RootedPhylogeneticTreeCalculator
         List<TreeNode> trees = new List<TreeNode>();
         List<Graph> graphs = new List<Graph>();
         int emptyNodeCounter = 0;
+        int edgeCounter = 0;
 
         public Form1()
         {
@@ -65,6 +66,63 @@ namespace RootedPhylogeneticTreeCalculator
             return graph;
         }
 
+        private void rozbicieKrawedzi(Object sender, EventArgs e)
+        {
+            String edgeName = rozbicieTextBox.Text;
+            List<String> firstNodes = new List<String>();
+            List<String> secondNodes = new List<String>();
+            TreeNode tree = trees[0];//[listBox1.SelectedIndices[0]];
+            if (tree == null) return;
+            collectNodes(tree, edgeName, firstNodes, secondNodes, false);
+            rozbicieLabel.Text = "{{";
+            foreach (String nodeName in firstNodes)
+            {
+                rozbicieLabel.Text += nodeName + ", ";
+            }
+            rozbicieLabel.Text.Remove(rozbicieLabel.Text.Length - 1);
+            rozbicieLabel.Text += "}, {";
+            foreach (String nodeName in secondNodes)
+            {
+                rozbicieLabel.Text += nodeName + ", ";
+            }
+            rozbicieLabel.Text.Remove(rozbicieLabel.Text.Length - 1);
+            rozbicieLabel.Text += "}}";
+            //Label1.Text = "Hello" + Environment.NewLine + "How are you?"
+
+            int a = 1;
+        }
+
+        private void collectNodes(TreeNode currentNode, String edgeName, List<String> firstNodes, List<String> secondNodes,
+            bool isAncestorFound)
+        {
+            if (currentNode.AncestorEdgeLabel == edgeName)
+            {
+                isAncestorFound = true;
+            }
+
+            // Wezel musi miec nazwe
+            if (currentNode.Label[0] != ' ' && currentNode.Label != "root")
+            {
+                // Sprawdza, czy rozbiciem nie jest wezel poprzedzajacy
+                if (!isAncestorFound)
+                {
+                    firstNodes.Add(currentNode.Label);
+                }
+                else
+                {
+                    secondNodes.Add(currentNode.Label);
+                }
+            }
+
+            if (!currentNode.IsLeaf)
+            {
+                foreach (TreeNode child in currentNode.Children)
+                {
+                    collectNodes(child, edgeName, firstNodes, secondNodes, isAncestorFound);
+                }
+            }
+
+        }
         // Przeszukuje rekurencyjnie nody, dodaje kazdy klaster do listy
         private void addClusters(TreeNode currentNode, List<String> clusterNames)
         {
@@ -113,6 +171,16 @@ namespace RootedPhylogeneticTreeCalculator
             Edge edge = graph.AddEdge(ancestorLabel, currentNode.Label);
             edge.Attr.ArrowheadAtSource = ArrowStyle.None;
             edge.Attr.ArrowheadAtTarget = ArrowStyle.None;
+
+            // Labelki do krawedzi
+
+            edge.LabelText = "edge" + edgeCounter.ToString();
+            edgeCounter++;
+
+            // Zapamietanie krawedzi jako laczacej z przodkiem (przyda sie do rozbicia drzewa)
+
+            currentNode.AncestorEdgeLabel = edge.LabelText;
+
             if (showCluster)
             {
                 edge.TargetNode.LabelText = currentNode.Cluster.ToString();

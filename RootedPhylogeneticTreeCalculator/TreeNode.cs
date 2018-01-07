@@ -5,6 +5,7 @@ namespace RootedPhylogeneticTreeCalculator
     public class TreeNode
     {
         public string Label { get; set; }
+        public string AncestorEdgeLabel { get; set; }
         public HashSet<TreeNode> Children { get; }
 
         public bool IsLeaf
