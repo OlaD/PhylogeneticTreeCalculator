@@ -46,8 +46,6 @@ namespace RootedPhylogeneticTreeCalculator
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.compLabel = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.rozbicieTextBox = new System.Windows.Forms.TextBox();
             this.rozbicieButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.rozbicieLabel = new System.Windows.Forms.Label();
@@ -58,10 +56,9 @@ namespace RootedPhylogeneticTreeCalculator
             this.graphPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.graphPanel.Location = new System.Drawing.Point(411, 31);
-            this.graphPanel.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.graphPanel.Location = new System.Drawing.Point(154, 13);
             this.graphPanel.Name = "graphPanel";
-            this.graphPanel.Size = new System.Drawing.Size(1195, 1299);
+            this.graphPanel.Size = new System.Drawing.Size(448, 680);
             this.graphPanel.TabIndex = 3;
             // 
             // openFileDialog1
@@ -71,10 +68,9 @@ namespace RootedPhylogeneticTreeCalculator
             // 
             // loadFileButton
             // 
-            this.loadFileButton.Location = new System.Drawing.Point(32, 29);
-            this.loadFileButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.loadFileButton.Location = new System.Drawing.Point(12, 12);
             this.loadFileButton.Name = "loadFileButton";
-            this.loadFileButton.Size = new System.Drawing.Size(363, 52);
+            this.loadFileButton.Size = new System.Drawing.Size(136, 22);
             this.loadFileButton.TabIndex = 4;
             this.loadFileButton.Text = "Wczytaj drzewa";
             this.loadFileButton.UseVisualStyleBackColor = true;
@@ -82,10 +78,9 @@ namespace RootedPhylogeneticTreeCalculator
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(32, 489);
-            this.button1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.button1.Location = new System.Drawing.Point(12, 205);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(363, 86);
+            this.button1.Size = new System.Drawing.Size(136, 36);
             this.button1.TabIndex = 5;
             this.button1.Text = "Stwórz drzewo konsensusu";
             this.button1.UseVisualStyleBackColor = true;
@@ -93,81 +88,76 @@ namespace RootedPhylogeneticTreeCalculator
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(32, 427);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.textBox1.Location = new System.Drawing.Point(12, 179);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(153, 38);
+            this.textBox1.Size = new System.Drawing.Size(60, 20);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = "70";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(208, 434);
-            this.label1.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.label1.Location = new System.Drawing.Point(78, 182);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 32);
+            this.label1.Size = new System.Drawing.Size(15, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "%";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 608);
-            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label2.Location = new System.Drawing.Point(11, 255);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(151, 32);
+            this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 8;
             this.label2.Text = "Poprawne:";
             // 
             // treeCheckLabel
             // 
             this.treeCheckLabel.AutoSize = true;
-            this.treeCheckLabel.Location = new System.Drawing.Point(192, 608);
-            this.treeCheckLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.treeCheckLabel.Location = new System.Drawing.Point(72, 255);
+            this.treeCheckLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.treeCheckLabel.Name = "treeCheckLabel";
-            this.treeCheckLabel.Size = new System.Drawing.Size(73, 32);
+            this.treeCheckLabel.Size = new System.Drawing.Size(29, 13);
             this.treeCheckLabel.TabIndex = 9;
             this.treeCheckLabel.Text = "Brak";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 820);
-            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label3.Location = new System.Drawing.Point(11, 344);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(195, 32);
+            this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 0;
             this.label3.Text = "Odległosc RF:";
             // 
             // rfDistanceLabel
             // 
             this.rfDistanceLabel.AutoSize = true;
-            this.rfDistanceLabel.Location = new System.Drawing.Point(29, 866);
-            this.rfDistanceLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.rfDistanceLabel.Location = new System.Drawing.Point(11, 363);
+            this.rfDistanceLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.rfDistanceLabel.Name = "rfDistanceLabel";
-            this.rfDistanceLabel.Size = new System.Drawing.Size(73, 32);
+            this.rfDistanceLabel.Size = new System.Drawing.Size(29, 13);
             this.rfDistanceLabel.TabIndex = 1;
             this.rfDistanceLabel.Text = "Brak";
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 31;
-            this.listBox1.Location = new System.Drawing.Point(32, 95);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.listBox1.Location = new System.Drawing.Point(12, 40);
             this.listBox1.Name = "listBox1";
             this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBox1.Size = new System.Drawing.Size(356, 221);
+            this.listBox1.Size = new System.Drawing.Size(136, 95);
             this.listBox1.TabIndex = 10;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(240, 808);
-            this.button2.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.button2.Location = new System.Drawing.Point(90, 339);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(155, 55);
+            this.button2.Size = new System.Drawing.Size(58, 23);
             this.button2.TabIndex = 11;
             this.button2.Text = "Sprawdź";
             this.button2.UseVisualStyleBackColor = true;
@@ -176,10 +166,9 @@ namespace RootedPhylogeneticTreeCalculator
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(35, 339);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.checkBox1.Location = new System.Drawing.Point(13, 142);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(218, 36);
+            this.checkBox1.Size = new System.Drawing.Size(88, 17);
             this.checkBox1.TabIndex = 12;
             this.checkBox1.Text = "pokaż klastry";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -187,10 +176,9 @@ namespace RootedPhylogeneticTreeCalculator
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(240, 689);
-            this.button3.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.button3.Location = new System.Drawing.Point(90, 289);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(155, 55);
+            this.button3.Size = new System.Drawing.Size(58, 23);
             this.button3.TabIndex = 13;
             this.button3.Text = "Sprawdź";
             this.button3.UseVisualStyleBackColor = true;
@@ -199,77 +187,59 @@ namespace RootedPhylogeneticTreeCalculator
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(35, 701);
-            this.label5.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.label5.Location = new System.Drawing.Point(13, 294);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(148, 32);
+            this.label5.Size = new System.Drawing.Size(58, 13);
             this.label5.TabIndex = 15;
             this.label5.Text = "Zgodność:";
             // 
             // compLabel
             // 
             this.compLabel.AutoSize = true;
-            this.compLabel.Location = new System.Drawing.Point(37, 742);
-            this.compLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.compLabel.Location = new System.Drawing.Point(14, 311);
             this.compLabel.Name = "compLabel";
-            this.compLabel.Size = new System.Drawing.Size(70, 32);
+            this.compLabel.Size = new System.Drawing.Size(28, 13);
             this.compLabel.TabIndex = 16;
             this.compLabel.Text = "brak";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(35, 967);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(244, 32);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "Rozbicie krawedzi";
-            // 
-            // rozbicieTextBox
-            // 
-            this.rozbicieTextBox.Location = new System.Drawing.Point(41, 1014);
-            this.rozbicieTextBox.Name = "rozbicieTextBox";
-            this.rozbicieTextBox.Size = new System.Drawing.Size(318, 38);
-            this.rozbicieTextBox.TabIndex = 18;
-            // 
             // rozbicieButton
             // 
-            this.rozbicieButton.Location = new System.Drawing.Point(43, 1070);
+            this.rozbicieButton.Location = new System.Drawing.Point(12, 389);
+            this.rozbicieButton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.rozbicieButton.Name = "rozbicieButton";
-            this.rozbicieButton.Size = new System.Drawing.Size(165, 55);
+            this.rozbicieButton.Size = new System.Drawing.Size(113, 23);
             this.rozbicieButton.TabIndex = 19;
-            this.rozbicieButton.Text = "Sprawdz";
+            this.rozbicieButton.Text = "Sprawdz rozbicie krawedzi";
             this.rozbicieButton.UseVisualStyleBackColor = true;
             this.rozbicieButton.Click += new System.EventHandler(this.rozbicieKrawedzi);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(41, 1166);
+            this.label6.Location = new System.Drawing.Point(11, 419);
+            this.label6.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(243, 32);
+            this.label6.Size = new System.Drawing.Size(91, 13);
             this.label6.TabIndex = 20;
             this.label6.Text = "Rozbite podzbiory";
             // 
             // rozbicieLabel
             // 
             this.rozbicieLabel.AutoSize = true;
-            this.rozbicieLabel.Location = new System.Drawing.Point(41, 1220);
+            this.rozbicieLabel.Location = new System.Drawing.Point(11, 439);
+            this.rozbicieLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.rozbicieLabel.Name = "rozbicieLabel";
-            this.rozbicieLabel.Size = new System.Drawing.Size(93, 32);
+            this.rozbicieLabel.Size = new System.Drawing.Size(0, 13);
             this.rozbicieLabel.TabIndex = 21;
-            this.rozbicieLabel.Text = "label7";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1637, 1342);
+            this.ClientSize = new System.Drawing.Size(514, 449);
             this.Controls.Add(this.rozbicieLabel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.rozbicieButton);
-            this.Controls.Add(this.rozbicieTextBox);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.compLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
@@ -285,7 +255,6 @@ namespace RootedPhylogeneticTreeCalculator
             this.Controls.Add(this.button1);
             this.Controls.Add(this.loadFileButton);
             this.Controls.Add(this.graphPanel);
-            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.Name = "Form1";
             this.Text = "„Kalkulator” drzew filogenetycznych ukorzenionych";
             this.ResumeLayout(false);
@@ -310,8 +279,6 @@ namespace RootedPhylogeneticTreeCalculator
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label compLabel;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox rozbicieTextBox;
         private System.Windows.Forms.Button rozbicieButton;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label rozbicieLabel;

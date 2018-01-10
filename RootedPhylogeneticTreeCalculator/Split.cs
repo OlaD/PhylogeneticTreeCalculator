@@ -13,7 +13,7 @@
 
         public override string ToString()
         {
-            return "{" + Set1.ToString() + "," + Set2.ToString() + "}";
+            return "{" + Set1.ToString() + "|" + Set2.ToString() + "}";
         }
     }
 }

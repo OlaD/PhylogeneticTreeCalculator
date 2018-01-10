@@ -7,6 +7,8 @@ namespace RootedPhylogeneticTreeCalculator
         public string Label { get; set; }
         public string AncestorEdgeLabel { get; set; }
         public HashSet<TreeNode> Children { get; }
+        public int Id { get; }
+        private static int nextId = 0;
 
         public bool IsLeaf
         {
@@ -38,6 +40,8 @@ namespace RootedPhylogeneticTreeCalculator
         {
             Label = label;
             Children = new HashSet<TreeNode>();
+            Id = nextId;
+            nextId++;
         }
 
         public TreeNode AddChild(string label = "")
