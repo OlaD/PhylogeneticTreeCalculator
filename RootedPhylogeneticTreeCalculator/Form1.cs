@@ -15,9 +15,15 @@ namespace RootedPhylogeneticTreeCalculator
         List<Graph> graphs = new List<Graph>();
         int emptyNodeCounter = 0;
         int edgeCounter = 0;
+        bool deleteEmpty = true;
+        String rootName = "root";
 
         public Form1()
         {
+            if (deleteEmpty)
+            {
+                rootName = "      ";
+            }
             InitializeComponent();
             viewer = new GViewer();
         }
@@ -46,7 +52,7 @@ namespace RootedPhylogeneticTreeCalculator
                     Graph graph = AddGraph();
                     listBox1.Items.Add(file.Substring(file.LastIndexOf('\\'), file.Length - file.LastIndexOf('\\')));
 
-                    tree.Label = "root";
+                    tree.Label = rootName;//"root";
                     treeToGraph(tree, tree.Label, graph, checkBox1.Checked);
                     ShowGraph(graph);
 
@@ -68,28 +74,54 @@ namespace RootedPhylogeneticTreeCalculator
 
         private void rozbicieKrawedzi(Object sender, EventArgs e)
         {
-            String edgeName = rozbicieTextBox.Text;
+            String edgeName = "";
+            List<int> edgeList = new List<int>();
+            //String edgeName = rozbicieTextBox.Text;
             List<String> firstNodes = new List<String>();
             List<String> secondNodes = new List<String>();
-            TreeNode tree = trees[0];//[listBox1.SelectedIndices[0]];
-            if (tree == null) return;
+            if(listBox1.SelectedIndices.Count == 0)
+            {
+                return;
+            }
+            TreeNode tree = trees[listBox1.SelectedIndices[0]];
+
+            foreach (IViewerObject kuku in viewer.Entities)
+            {
+                 if (kuku.GetType().Name == "DEdge")
+                 {
+                    DEdge abc = (DEdge)kuku;
+                    //abc.SelectedForEditing;
+                    if (abc.SelectedForEditing)
+                    {
+                        edgeName = abc.Edge.LabelText;
+                       // IViewerNode target = ((IViewerEdge)kuku).Target;
+                    }
+                    edgeList.Add(abc.Edge.LabelText.Length);
+                }
+                var adsdsa = kuku.GetType();
+            }
+
             collectNodes(tree, edgeName, firstNodes, secondNodes, false);
-            rozbicieLabel.Text = "{{";
+
+            String rozbicieText = "";
+            rozbicieText = "{{";
             foreach (String nodeName in firstNodes)
             {
-                rozbicieLabel.Text += nodeName + ", ";
+                rozbicieText += nodeName + ", ";
             }
-            rozbicieLabel.Text.Remove(rozbicieLabel.Text.Length - 1);
-            rozbicieLabel.Text += "}, {";
+            rozbicieText.Remove(rozbicieText.Length - 1);
+            rozbicieText += "},\n\n{";
             foreach (String nodeName in secondNodes)
             {
-                rozbicieLabel.Text += nodeName + ", ";
+                rozbicieText += nodeName + ", ";
             }
-            rozbicieLabel.Text.Remove(rozbicieLabel.Text.Length - 1);
-            rozbicieLabel.Text += "}}";
-            //Label1.Text = "Hello" + Environment.NewLine + "How are you?"
+            rozbicieText.Remove(rozbicieText.Length - 1);
+            rozbicieText += "}}";
 
-            int a = 1;
+            const string caption = "Rozbicie krawedzi";
+            var result = MessageBox.Show(rozbicieText, caption,
+                                         MessageBoxButtons.OK,
+                                         MessageBoxIcon.Information);
         }
 
         private void collectNodes(TreeNode currentNode, String edgeName, List<String> firstNodes, List<String> secondNodes,
@@ -100,8 +132,9 @@ namespace RootedPhylogeneticTreeCalculator
                 isAncestorFound = true;
             }
 
+            
             // Wezel musi miec nazwe
-            if (currentNode.Label[0] != ' ' && currentNode.Label != "root")
+            if (currentNode.Label != "" && currentNode.Label[0] != ' ' && currentNode.Label != rootName)
             {
                 // Sprawdza, czy rozbiciem nie jest wezel poprzedzajacy
                 if (!isAncestorFound)
@@ -139,16 +172,15 @@ namespace RootedPhylogeneticTreeCalculator
         // Dodaje krawedzie na podstawie rekurencyjnego przeszukania drzewa
         private void treeToGraph(TreeNode currentNode, String ancestorLabel, Graph graph, bool showCluster)
         {
+
             // Dodaje spacje do pustych nodow, przy dodaniu do krawedzi nie moze byc pustych
-            if (currentNode.Label == "")
+            if (!deleteEmpty && currentNode.Label == "")
             {
-                for(int i=0; i<= emptyNodeCounter;i++)
+                for (int i = 0; i <= emptyNodeCounter; i++)
                 {
                     // Brzydki workaround na puste <clad> bez <name>
                     currentNode.Label += " ";
                 }
-                //currentNode.Label = "node" + emptyNodeCounter.ToString();
-                //currentNode.Label = currentNode.Cluster.ToString();
                 emptyNodeCounter++;
             }
 
@@ -158,33 +190,50 @@ namespace RootedPhylogeneticTreeCalculator
                 foreach (TreeNode child in currentNode.Children)
                 {
                     String ancestorString = currentNode.Label;
+                    if (deleteEmpty && currentNode.Label == "")
+                    {
+                        ancestorString = ancestorLabel;
+                    }
                     treeToGraph(child, ancestorString, graph, showCluster);
                 }
-                if (currentNode.Label == "root")
+                if (currentNode.Label == rootName)
                 {
-                    Node node = graph.AddNode("root");
+                    Node node = graph.AddNode(rootName);
                     if (showCluster)
                         node.LabelText = currentNode.Cluster.ToString();
                     return;
                 }
             }
-            Edge edge = graph.AddEdge(ancestorLabel, currentNode.Label);
-            edge.Attr.ArrowheadAtSource = ArrowStyle.None;
-            edge.Attr.ArrowheadAtTarget = ArrowStyle.None;
-
-            // Labelki do krawedzi
-
-            edge.LabelText = "edge" + edgeCounter.ToString();
-            edgeCounter++;
-
-            // Zapamietanie krawedzi jako laczacej z przodkiem (przyda sie do rozbicia drzewa)
-
-            currentNode.AncestorEdgeLabel = edge.LabelText;
-
-            if (showCluster)
+            if ((!deleteEmpty) || (deleteEmpty && (currentNode.Label != "") && (currentNode.Label != rootName)))// && ancestorLabel != rootName))
             {
-                edge.TargetNode.LabelText = currentNode.Cluster.ToString();
+                Edge edge = graph.AddEdge(ancestorLabel, currentNode.Label);
+                edge.Attr.ArrowheadAtSource = ArrowStyle.None;
+                edge.Attr.ArrowheadAtTarget = ArrowStyle.None;
+
+                // Labelki do krawedzi
+                edge.LabelText = "";
+                for (int counterr = 0; counterr < edgeCounter; counterr++)
+                {
+                    edge.LabelText += ' ';
+                }
+
+                //"edge" + edgeCounter.ToString();
+                edgeCounter++;
+
+                // Zapamietanie krawedzi jako laczacej z przodkiem (przyda sie do rozbicia drzewa)
+
+                currentNode.AncestorEdgeLabel = edge.LabelText;
+
+                if (showCluster)
+                {
+                    edge.TargetNode.LabelText = currentNode.Cluster.ToString();
+                }
             }
+            else if (deleteEmpty && (currentNode.Label != "") && (currentNode.Label == rootName))
+            {
+
+            }
+            
         }
 
         // Sprawdza zgodnosc drzewa (czy nie powtarzaja sie wierzcholki)
@@ -248,8 +297,11 @@ namespace RootedPhylogeneticTreeCalculator
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            checkTree(trees[listBox1.SelectedIndex]);
-            ShowGraph(graphs[listBox1.SelectedIndex]);
+            if ((listBox1.SelectedIndex >=0) && (listBox1.SelectedIndex <= trees.Count))
+            {
+                checkTree(trees[listBox1.SelectedIndex]);
+                ShowGraph(graphs[listBox1.SelectedIndex]);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -308,7 +360,7 @@ namespace RootedPhylogeneticTreeCalculator
             foreach(TreeNode tree in trees)
             {
                 Graph graph = AddGraph();
-                tree.Label = "root";
+                tree.Label = rootName;
                 treeToGraph(tree, tree.Label, graph, checkBox1.Checked);
             }
             if(listBox1.SelectedIndex == -1)

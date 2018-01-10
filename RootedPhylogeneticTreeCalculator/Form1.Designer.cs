@@ -46,8 +46,6 @@ namespace RootedPhylogeneticTreeCalculator
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.compLabel = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.rozbicieTextBox = new System.Windows.Forms.TextBox();
             this.rozbicieButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.rozbicieLabel = new System.Windows.Forms.Label();
@@ -216,36 +214,20 @@ namespace RootedPhylogeneticTreeCalculator
             this.compLabel.TabIndex = 16;
             this.compLabel.Text = "brak";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(35, 967);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(244, 32);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "Rozbicie krawedzi";
-            // 
-            // rozbicieTextBox
-            // 
-            this.rozbicieTextBox.Location = new System.Drawing.Point(41, 1014);
-            this.rozbicieTextBox.Name = "rozbicieTextBox";
-            this.rozbicieTextBox.Size = new System.Drawing.Size(318, 38);
-            this.rozbicieTextBox.TabIndex = 18;
-            // 
             // rozbicieButton
             // 
-            this.rozbicieButton.Location = new System.Drawing.Point(43, 1070);
+            this.rozbicieButton.Location = new System.Drawing.Point(32, 928);
             this.rozbicieButton.Name = "rozbicieButton";
-            this.rozbicieButton.Size = new System.Drawing.Size(165, 55);
+            this.rozbicieButton.Size = new System.Drawing.Size(301, 55);
             this.rozbicieButton.TabIndex = 19;
-            this.rozbicieButton.Text = "Sprawdz";
+            this.rozbicieButton.Text = "Sprawdz rozbicie krawedzi";
             this.rozbicieButton.UseVisualStyleBackColor = true;
             this.rozbicieButton.Click += new System.EventHandler(this.rozbicieKrawedzi);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(41, 1166);
+            this.label6.Location = new System.Drawing.Point(29, 999);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(243, 32);
             this.label6.TabIndex = 20;
@@ -254,11 +236,10 @@ namespace RootedPhylogeneticTreeCalculator
             // rozbicieLabel
             // 
             this.rozbicieLabel.AutoSize = true;
-            this.rozbicieLabel.Location = new System.Drawing.Point(41, 1220);
+            this.rozbicieLabel.Location = new System.Drawing.Point(29, 1047);
             this.rozbicieLabel.Name = "rozbicieLabel";
-            this.rozbicieLabel.Size = new System.Drawing.Size(93, 32);
+            this.rozbicieLabel.Size = new System.Drawing.Size(0, 32);
             this.rozbicieLabel.TabIndex = 21;
-            this.rozbicieLabel.Text = "label7";
             // 
             // Form1
             // 
@@ -268,8 +249,6 @@ namespace RootedPhylogeneticTreeCalculator
             this.Controls.Add(this.rozbicieLabel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.rozbicieButton);
-            this.Controls.Add(this.rozbicieTextBox);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.compLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
@@ -310,8 +289,6 @@ namespace RootedPhylogeneticTreeCalculator
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label compLabel;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox rozbicieTextBox;
         private System.Windows.Forms.Button rozbicieButton;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label rozbicieLabel;
